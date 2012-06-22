@@ -1,0 +1,29 @@
+.link-action {
+	font-size: 10px;
+}
+
+.action-bar {
+	font-size: 10px;
+}
+
+div.entry {
+	background-color: rgba(0,255,0, 0.05);
+	border: 1px solid rgba(255,255,255, 0.02);
+	margin-bottom: 20px;
+	min-height: 20px;
+	padding: 19px;
+}
+
+div.entry:hover {
+	background-color: rgba(0,255,0, 0.1);
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+div.entry > .action-bar {
+	visibility: hidden;
+}
+
+div.entry:hover > .action-bar {
+	visibility: visible;
+}
+

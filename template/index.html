@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>i-Bribe</title>
+        <meta name="viewport" content="width=device-width, initial-scale-=1.0">
+        <meta name="description", content="">
+        <meta name="author" content="Neil Yao">
+        <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/static/css/datepickr.css" rel="stylesheet">
+        <link href="/static/css/main.css" rel="stylesheet">
+        <style type="text/css">
+            body {
+                padding-top: 60px;
+                padding-bottom: 40px;
+            }
+        </style>
+        <link href="/static/css/bootstrap-responsive.min.css" rel="stylesheet">
+    </head>
+
+    <body>
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="brand" href="#">i-Bribe</a>
+                    <div class="nav-collapse">
+                        <ul class="nav">
+                            <li class="active"><a href="#">Home</a></li>
+                            <li><a href="#">More</a></li>
+                            <li><a href="#">About</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="span6">
+                    <div class="hero-unit">
+                        <h2>我行贿</h2>
+                        <p>我行贿，我光荣。花小钱，办大事，一个字：值</p>
+                        <a class="btn btn-large btn-primary" data-toggle="modal" href="#add-entry" id="btn-add-bribe">添砖加瓦</a>
+                    </div>
+                </div>
+                <div class="span6">
+                    <div class="hero-unit">
+                        <h2>我不行贿</h2>
+                        <p>坚持正义，绝不低头。拒绝行贿，我就不信这个邪！</p>
+                        <a class="btn btn-large btn-primary">添砖加瓦</a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="span6">
+                    <div class="page-header">
+                        <div id="counter_bribe" class="pull-right"><input type="hidden" name="counter-value" value="0" /></div>
+                        <h2>行贿记录</h2>
+                    </div>
+                    <div class="entry">
+                        <div>
+                            <span class="label label-info">我行贿啦</span> 某年月日，我给某类型人员行贿若干元。
+                        </div>
+                        <div class="navbar action-bar">
+                            <ul class="nav">
+                                <li><a href="#"><i class="icon-retweet"></i>我也干过</a></li>
+                                <li><a href="#"><i class="icon-share"></i>分享</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="well">
+                        某年月日，我给某类型人员行贿若干元。
+                    </div>
+                    <div class="well">
+                        某年月日，我给某类型人员行贿若干元。
+                    </div>
+                    <div class="well">
+                        某年月日，我给某类型人员行贿若干元。
+                    </div>
+                </div>
+                <div class="span6">
+                    <div class="page-header">
+                        <div id="counter_nobribe" class="pull-right"><input type="hidden" name="counter-value" value="0" /></div>
+                        <h2>拒绝行贿记录</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal hide fade" id="add-entry">
+            <div class="modal-header">
+            	<button type="button" class="close" data-dismiss="modal">x</button>
+            	<h3>我行贿了</h3>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <fieldset>
+                        <div class="control-group">
+                            <label class="control-label" for="input-target">行贿对象</label>
+                            <div class="controls">
+                                <div class="input-prepend">
+                                    <span class="add-on"><i class="icon-user"></i></span><input id="input-target" type="text" />
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="control-group">
+                            <label class="control-label" for="input-amount">行贿金额</label>
+                            <div class="controls">
+                                <div class="input-prepend">
+                                    <span class="add-on">￥</span><input id="input-amount" type="text" />
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="control-group">
+                            <label class="control-label" for="input-target">行贿日期</label>
+                            <div class="controls">
+                                <div class="input-prepend">
+                                    <span class="add-on"><i class="icon-time"></i></span><input id="input-date" type="text" />
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="control-group">
+                            <label class="control-label" for="check-succeed">达成目标</label>
+                            <div class="controls">
+                                <label class="checkbox">
+                                    <input id="check-succeed" type="checkbox" value="check-succeed">达成</input>
+                                </label>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="control-group">
+                            <label class="control-label" for="input-story">行贿故事</label>
+                            <div class="controls">
+                                <textarea id="input-story" class="input-xlarge" rows="3" placeholder="吐槽几句吧"></textarea>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="modal-footer">
+            	<a href="#" class="btn">Cancel</a>
+            	<a href="#" class="btn btn-primary">Save</a>
+            </div>
+        </div>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+        <script src="/static/js/bootstrap.min.js" type="text/javascript"></script>
+        <script src="/static/js/bootstrap-datepicker.js" type="text/javascript"></script>
+        <script src="/static/js/jquery.flipCounter.1.2.pack.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            $(function() {
+                    $("#counter_bribe").flipCounter({
+                        imagePath:"/static/img/flipCounter-medium.png"
+                    });          
+                    $("#counter_nobribe").flipCounter({
+                        imagePath:"/static/img/flipCounter-medium.png"
+                    });          
+                    $("#counter_bribe").flipCounter("startAnimation",
+                        {
+                            number: 1000,
+                            end_number: 1024,
+                            duration: 1000
+                        }
+                    );
+                    $("#counter_nobribe").flipCounter("startAnimation",
+                        {
+                            number: 900,
+                            end_number: 904,
+                            duration: 1000
+                        }
+                        );
+                    $("#input-date").datepicker({
+                        autoclose: true, 
+                    });
+                });
+        </script>
+    </body>
+</html>
