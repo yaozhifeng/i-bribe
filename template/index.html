@@ -8,7 +8,7 @@
         <meta name="author" content="Neil Yao">
         <meta name="google-site-verification" content="1uGiKswSacyPdklDSZ9IQPn51q_oJRRUg0gUgXM2rfo" />       
         <link href="/static/css/bootstrap.min.css" rel="stylesheet">
-        <link href="/static/css/datepickr.css" rel="stylesheet">
+        <link href="/static/css/datepicker.css" rel="stylesheet">
         <link href="/static/css/main.css" rel="stylesheet">
         <style type="text/css">
             body {
@@ -106,56 +106,70 @@
             	<h3>我行贿了</h3>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal">
-                    <fieldset>
-                        <div class="control-group">
-                            <label class="control-label" for="input-target">行贿对象</label>
-                            <div class="controls">
-                                <div class="input-prepend">
-                                    <span class="add-on"><i class="icon-user"></i></span><input id="input-target" type="text" />
+                <div class="row">
+                    <div class="entry-form">
+                        <form class="form-horizontal">
+                            <fieldset>
+                                <div class="control-group">
+                                    <label class="control-label" for="input-target">行贿对象</label>
+                                    <div class="controls">
+                                        <div class="input-prepend">
+                                            <span class="add-on"><i class="icon-user"></i></span><input id="input-target" type="text" />
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    </fieldset>
-                    <fieldset>
-                        <div class="control-group">
-                            <label class="control-label" for="input-amount">行贿金额</label>
-                            <div class="controls">
-                                <div class="input-prepend">
-                                    <span class="add-on">￥</span><input id="input-amount" type="text" />
+                            </fieldset>
+                            <fieldset>
+                                <div class="control-group">
+                                    <label class="control-label" for="input-location">行贿地区</label>
+                                    <div class="controls">
+                                        <div class="input-prepend">
+                                            <span class="add-on"><i class="icon-home"></i></span><input id="input-location" type="text" />
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    </fieldset>
-                    <fieldset>
-                        <div class="control-group">
-                            <label class="control-label" for="input-target">行贿日期</label>
-                            <div class="controls">
-                                <div class="input-prepend">
-                                    <span class="add-on"><i class="icon-time"></i></span><input id="input-date" type="text" />
+                            </fieldset>
+                            <fieldset>
+                                <div class="control-group">
+                                    <label class="control-label" for="input-amount">行贿金额</label>
+                                    <div class="controls">
+                                        <div class="input-prepend">
+                                            <span class="add-on">￥</span><input id="input-amount" type="text" />
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    </fieldset>
-                    <fieldset>
-                        <div class="control-group">
-                            <label class="control-label" for="check-succeed">达成目标</label>
-                            <div class="controls">
-                                <label class="checkbox">
-                                    <input id="check-succeed" type="checkbox" value="check-succeed">达成</input>
-                                </label>
-                            </div>
-                        </div>
-                    </fieldset>
-                    <fieldset>
-                        <div class="control-group">
-                            <label class="control-label" for="input-story">行贿故事</label>
-                            <div class="controls">
-                                <textarea id="input-story" class="input-xlarge" rows="3" placeholder="吐槽几句吧"></textarea>
-                            </div>
-                        </div>
-                    </fieldset>
-                </form>
+                            </fieldset>
+                            <fieldset>
+                                <div class="control-group">
+                                    <label class="control-label" for="input-target">行贿日期</label>
+                                    <div class="controls">
+                                        <div class="input-prepend">
+                                            <span class="add-on"><i class="icon-time"></i></span><input id="input-date" type="text" data-date-format="yyyy-mm-dd" value="{{date}}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <fieldset>
+                                <div class="control-group">
+                                    <label class="control-label" for="check-succeed">达成目标</label>
+                                    <div class="controls">
+                                        <label class="checkbox">
+                                            <input id="check-succeed" type="checkbox" value="check-succeed">达成</input>
+                                        </label>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <fieldset>
+                                <div class="control-group">
+                                    <label class="control-label" for="input-story">行贿故事</label>
+                                    <div class="controls">
+                                        <textarea id="input-story" class="input-xlarge" rows="3" placeholder="吐槽几句吧"></textarea>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
             	<a href="#" class="btn">Cancel</a>
@@ -190,7 +204,8 @@
                         }
                         );
                     $("#input-date").datepicker({
-                        autoclose: true, 
+                        autoclose: true,
+                        format: "yyyy-mm-dd"
                     });
                 });
         </script>

@@ -16,15 +16,21 @@
 #
 import webapp2
 import os
-from google.appengine.ext.webapp import template
+#from google.appengine.ext.webapp import template
+import jinja2
+import datetime
+
+jinja_environment = jinja2.Environment(
+	loader=jinja2.FileSystemLoader(
+		os.path.join(os.path.dirname(__file__), 'template')))
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
-    	path = os.path.join(os.path.dirname(__file__), 'template/index.html')
     	template_values = {
-    		'key': 'value'
+    		'date': datetime.datetime.today().strftime("%Y-%m-%d")
     	}
-    	self.response.out.write(template.render(path, template_values))
+    	template = jinja_environment.get_template("index.html")
+    	self.response.out.write(template.render(template_values))
         #self.response.out.write('Hello world!')
 
 app = webapp2.WSGIApplication([('/', MainHandler)],
