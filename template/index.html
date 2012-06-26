@@ -48,26 +48,15 @@
             </div>
         </div>
         <div class="container">
-            <div class="row">
-                <div class="span6">
-                    <div class="hero-unit">
-                        <h2>我行贿</h2>
-                        <p>我行贿，我光荣。花小钱，办大事，一个字：值</p>
-                        <a class="btn btn-large btn-primary" data-toggle="modal" href="#add-entry" id="btn-add-bribe">添砖加瓦</a>
-                    </div>
-                </div>
-                <div class="span6">
-                    <div class="hero-unit">
-                        <h2>我不行贿</h2>
-                        <p>坚持正义，绝不低头。拒绝行贿，我就不信这个邪！</p>
-                        <a class="btn btn-large btn-primary">添砖加瓦</a>
-                    </div>
-                </div>
+            <div class="hero-unit">
+                <h2>我行贿</h2>
+                <p>我行贿，我光荣。花小钱，办大事，一个字：值</p>
+                <a class="btn btn-large btn-primary" data-toggle="modal" href="#add-entry" id="btn-add-entry">添砖加瓦</a>
             </div>
             <div class="row">
-                <div class="span6">
+                <div class="span8">
                     <div class="page-header">
-                        <div id="counter_bribe" class="pull-right"><input type="hidden" name="counter-value" value="0" /></div>
+                        <div id="counter_bribe" class="pull-right"><input type="hidden" name="counter-value" value="{{count}}" /></div>
                         <h2>行贿记录</h2>
                     </div>
                     <div class="entry">
@@ -81,21 +70,17 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="well">
-                        某年月日，我给某类型人员行贿若干元。
+                    {% for entry in entries %}
+                    <div class="entry">
+                        {{entry.story}}
                     </div>
-                    <div class="well">
-                        某年月日，我给某类型人员行贿若干元。
-                    </div>
-                    <div class="well">
-                        某年月日，我给某类型人员行贿若干元。
-                    </div>
+                    {% endfor %}
+                    <div id="disqus_thread"></div>
+
                 </div>
-                <div class="span6">
-                    <div class="page-header">
-                        <div id="counter_nobribe" class="pull-right"><input type="hidden" name="counter-value" value="0" /></div>
-                        <h2>拒绝行贿记录</h2>
-                    </div>
+                <div class="span4">
+                    <h2>行贿排行榜</h2>
+                    <p>地区排行，行业排行</p>
                 </div>
             </div>
         </div>
@@ -108,13 +93,13 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="entry-form">
-                        <form class="form-horizontal">
+                        <form id="form_add_entry" class="form-horizontal" method="post" action="/add_entry">
                             <fieldset>
                                 <div class="control-group">
                                     <label class="control-label" for="input-target">行贿对象</label>
                                     <div class="controls">
                                         <div class="input-prepend">
-                                            <span class="add-on"><i class="icon-user"></i></span><input id="input-target" type="text" />
+                                            <span class="add-on"><i class="icon-user"></i></span><input id="input-target" type="text" name="target"/>
                                         </div>
                                     </div>
                                 </div>
@@ -124,7 +109,7 @@
                                     <label class="control-label" for="input-location">行贿地区</label>
                                     <div class="controls">
                                         <div class="input-prepend">
-                                            <span class="add-on"><i class="icon-home"></i></span><input id="input-location" type="text" />
+                                            <span class="add-on"><i class="icon-home"></i></span><input id="input-location" type="text" name="location"/>
                                         </div>
                                     </div>
                                 </div>
@@ -134,7 +119,7 @@
                                     <label class="control-label" for="input-amount">行贿金额</label>
                                     <div class="controls">
                                         <div class="input-prepend">
-                                            <span class="add-on">￥</span><input id="input-amount" type="text" />
+                                            <span class="add-on">￥</span><input id="input-amount" type="text" name="amount"/>
                                         </div>
                                     </div>
                                 </div>
@@ -144,7 +129,7 @@
                                     <label class="control-label" for="input-target">行贿日期</label>
                                     <div class="controls">
                                         <div class="input-prepend">
-                                            <span class="add-on"><i class="icon-time"></i></span><input id="input-date" type="text" data-date-format="yyyy-mm-dd" value="{{date}}"/>
+                                            <span class="add-on"><i class="icon-time"></i></span><input id="input-date" type="text" data-date-format="yyyy-mm-dd" value="{{date}}" name="date"/>
                                         </div>
                                     </div>
                                 </div>
@@ -154,7 +139,7 @@
                                     <label class="control-label" for="check-succeed">达成目标</label>
                                     <div class="controls">
                                         <label class="checkbox">
-                                            <input id="check-succeed" type="checkbox" value="check-succeed">达成</input>
+                                            <input id="check-succeed" type="checkbox" value="check-succeed" name="succeed">达成</input>
                                         </label>
                                     </div>
                                 </div>
@@ -163,7 +148,7 @@
                                 <div class="control-group">
                                     <label class="control-label" for="input-story">行贿故事</label>
                                     <div class="controls">
-                                        <textarea id="input-story" class="input-xlarge" rows="3" placeholder="吐槽几句吧"></textarea>
+                                        <textarea id="input-story" class="input-xlarge" rows="3" placeholder="吐槽几句吧" name="story"></textarea>
                                     </div>
                                 </div>
                             </fieldset>
@@ -172,11 +157,26 @@
                 </div>
             </div>
             <div class="modal-footer">
-            	<a href="#" class="btn">Cancel</a>
-            	<a href="#" class="btn btn-primary">Save</a>
+            	<a id="btn_cancel_entry" data-dismiss="modal" class="btn">Cancel</a>
+            	<a id="btn_save_entry" class="btn btn-primary">Save</a>
             </div>
         </div>
 
+        <div id="disqus_thread"></div>
+        <script type="text/javascript">
+            /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+            var disqus_shortname = 'ibribe'; // required: replace example with your forum shortname
+
+            /* * * DON'T EDIT BELOW THIS LINE * * */
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+               
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
         <script src="/static/js/bootstrap.min.js" type="text/javascript"></script>
         <script src="/static/js/bootstrap-datepicker.js" type="text/javascript"></script>
@@ -186,26 +186,12 @@
                     $("#counter_bribe").flipCounter({
                         imagePath:"/static/img/flipCounter-medium.png"
                     });          
-                    $("#counter_nobribe").flipCounter({
-                        imagePath:"/static/img/flipCounter-medium.png"
-                    });          
-                    $("#counter_bribe").flipCounter("startAnimation",
-                        {
-                            number: 1000,
-                            end_number: 1024,
-                            duration: 1000
-                        }
-                    );
-                    $("#counter_nobribe").flipCounter("startAnimation",
-                        {
-                            number: 900,
-                            end_number: 904,
-                            duration: 1000
-                        }
-                        );
                     $("#input-date").datepicker({
                         autoclose: true,
                         format: "yyyy-mm-dd"
+                    });
+                    $("#btn_save_entry").click(function(){
+                        $("#form_add_entry").submit()
                     });
                 });
         </script>

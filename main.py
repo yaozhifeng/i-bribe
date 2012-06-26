@@ -19,6 +19,8 @@ import os
 #from google.appengine.ext.webapp import template
 import jinja2
 import datetime
+from model import Entry
+from google.appengine.ext import db
 
 jinja_environment = jinja2.Environment(
 	loader=jinja2.FileSystemLoader(
@@ -29,9 +31,32 @@ class MainHandler(webapp2.RequestHandler):
     	template_values = {
     		'date': datetime.datetime.today().strftime("%Y-%m-%d")
     	}
+        q = db.GqlQuery('SELECT * FROM Entry')
+        template_values['count'] = q.count()
+
+        entries = db.GqlQuery('SELECT * FROM Entry LIMIT 10')
+        template_values['entries'] = entries
+
     	template = jinja_environment.get_template("index.html")
     	self.response.out.write(template.render(template_values))
         #self.response.out.write('Hello world!')
 
-app = webapp2.WSGIApplication([('/', MainHandler)],
-                              debug=True)
+class AddEntryHandler(webapp2.RequestHandler):
+    def post(self):
+        target = self.request.get('target')
+        amount = int(self.request.get('amount'))
+        date = datetime.datetime.strptime(self.request.get('date'), '%Y-%m-%d').date()
+        succeed = True#self.request.get('succeed')
+        story = self.request.get('story')
+         
+        entry = Entry(target=target, amount=amount, date=date, succeed=succeed, story=story)
+        entry.put()
+
+        self.redirect('/')
+
+
+app = webapp2.WSGIApplication([
+            ('/', MainHandler),
+            ('/add_entry', AddEntryHandler)
+        ],
+        debug=True)
