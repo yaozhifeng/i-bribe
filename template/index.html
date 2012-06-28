@@ -1,76 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>i-Bribe</title>
-        <meta name="viewport" content="width=device-width, initial-scale-=1.0">
-        <meta name="description", content="">
-        <meta name="author" content="Neil Yao">
-        <meta name="google-site-verification" content="1uGiKswSacyPdklDSZ9IQPn51q_oJRRUg0gUgXM2rfo" />       
-        <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+{% extends "base.html" %}
+
+{% block extra_style %}
         <link href="/static/css/datepicker.css" rel="stylesheet">
-        <link href="/static/css/main.css" rel="stylesheet">
+
         <style type="text/css">
             body {
                 padding-top: 60px;
                 padding-bottom: 40px;
             }
         </style>
-        <link href="/static/css/bootstrap-responsive.min.css" rel="stylesheet">
-         <script type="text/javascript">
+{% endblock %}
 
-          var _gaq = _gaq || [];
-          _gaq.push(['_setAccount', 'UA-32812757-1']);
-          _gaq.push(['_trackPageview']);
-
-          (function() {
-            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-          })();
-
-        </script>
-   </head>
-
-    <body>
-        <div class="navbar navbar-fixed-top">
-            <div class="navbar-inner">
-                <div class="container-fluid">
-                    <a data-target=".nav-collapse" data-toggle="collapse" class="btn btn-navbar">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </a>
-                    <a href="/" class="brand">i-Bribe</a>
-                    <div class="btn-group pull-right">
-                        {% if user %} 
-                        <a href="#" data-toggle="dropdown" class="btn dropdown-toggle">
-                            <i class="icon-user"></i>{{user}}
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                          <li><a href="#">Profile</a></li>
-                          <li class="divider"></li>
-                          <li><a href="{{logout_url}}">Sign Out</a></li>
-                        </ul>
-                        {% else %} 
-                        <a href="{{login_url}}" class="btn">
-                            <i class="icon-user"></i>Login
-                        </a>
-                        {%endif%}
-                    </div>
-                    <div class="nav-collapse">
-                        <ul class="nav">
-                          <li class="active"><a href="#">Home</a></li>
-                          <li><a href="#about">About</a></li>
-                          <li><a href="#contact">Contact</a></li>
-                        </ul>
-                    </div><!--/.nav-collapse -->
-                </div>
-            </div>
-        </div>
-
-        <div class="container">
+{% block content %}
             <div class="hero-unit">
                 <h2>我行贿</h2>
                 <p>我行贿，我光荣。花小钱，办大事，一个字：值</p>
@@ -106,103 +47,13 @@
                     <p>地区排行，行业排行</p>
                 </div>
             </div>
-        </div>
+            {% include "disqus.html" %}
+            {% include "add_entry.html" %}
+{% endblock %}
 
-        <div class="modal hide fade" id="add-entry">
-            <div class="modal-header">
-            	<button type="button" class="close" data-dismiss="modal">x</button>
-            	<h3>我行贿了</h3>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="entry-form">
-                        <form id="form_add_entry" class="form-horizontal" method="post" action="/add_entry">
-                            <fieldset>
-                                <div class="control-group">
-                                    <label class="control-label" for="input-target">行贿对象</label>
-                                    <div class="controls">
-                                        <div class="input-prepend">
-                                            <span class="add-on"><i class="icon-user"></i></span><input id="input-target" type="text" name="target" class="required"/>
-                                        </div>
-                                    </div>
-                                </div>
-                            </fieldset>
-                            <fieldset>
-                                <div class="control-group">
-                                    <label class="control-label" for="input-location">行贿地区</label>
-                                    <div class="controls">
-                                        <div class="input-prepend">
-                                            <span class="add-on"><i class="icon-home"></i></span><input id="input-location" type="text" name="location" class="required"/>
-                                        </div>
-                                    </div>
-                                </div>
-                            </fieldset>
-                            <fieldset>
-                                <div class="control-group">
-                                    <label class="control-label" for="input-amount">行贿金额</label>
-                                    <div class="controls">
-                                        <div class="input-prepend">
-                                            <span class="add-on">￥</span><input id="input-amount" type="text" name="amount" class="required"/>
-                                        </div>
-                                    </div>
-                                </div>
-                            </fieldset>
-                            <fieldset>
-                                <div class="control-group">
-                                    <label class="control-label" for="input-target">行贿日期</label>
-                                    <div class="controls">
-                                        <div class="input-prepend">
-                                            <span class="add-on"><i class="icon-time"></i></span><input id="input-date" type="text" data-date-format="yyyy-mm-dd" value="{{date}}" name="date"/>
-                                        </div>
-                                    </div>
-                                </div>
-                            </fieldset>
-                            <fieldset>
-                                <div class="control-group">
-                                    <label class="control-label" for="check-succeed">达成目标</label>
-                                    <div class="controls">
-                                        <label class="checkbox">
-                                            <input id="check-succeed" type="checkbox" value="check-succeed" name="succeed">达成</input>
-                                        </label>
-                                    </div>
-                                </div>
-                            </fieldset>
-                            <fieldset>
-                                <div class="control-group">
-                                    <label class="control-label" for="input-story">行贿故事</label>
-                                    <div class="controls">
-                                        <textarea id="input-story" class="input-xlarge" rows="3" placeholder="吐槽几句吧" name="story"></textarea>
-                                    </div>
-                                </div>
-                            </fieldset>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-            	<a id="btn_cancel_entry" data-dismiss="modal" class="btn">Cancel</a>
-            	<a id="btn_save_entry" class="btn btn-primary">Save</a>
-            </div>
-        </div>
 
-        <div id="disqus_thread"></div>
-        <script type="text/javascript">
-            /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-            var disqus_shortname = 'ibribe'; // required: replace example with your forum shortname
 
-            /* * * DON'T EDIT BELOW THIS LINE * * */
-            (function() {
-                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-                dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-            })();
-        </script>
-        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-        <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-               
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
-        <script src="/static/js/jquery.validate.min.js" type="text/javascript"></script>
-        <script src="/static/js/bootstrap.min.js" type="text/javascript"></script>
+{% block extra_scripts %}          
         <script src="/static/js/bootstrap-datepicker.js" type="text/javascript"></script>
         <script src="/static/js/jquery.flipCounter.1.2.pack.js" type="text/javascript"></script>
         <script type="text/javascript">
@@ -221,5 +72,5 @@
                     $("#form_add_entry").validate();
                 });
         </script>
-    </body>
-</html>
+{% endblock %}
+

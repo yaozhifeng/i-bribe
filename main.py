@@ -16,7 +16,6 @@
 #
 import webapp2
 import os
-#from google.appengine.ext.webapp import template
 import jinja2
 import datetime
 from model import Entry
