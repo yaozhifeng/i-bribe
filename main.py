@@ -29,20 +29,10 @@ jinja_environment = jinja2.Environment(
 class MainHandler(webapp2.RequestHandler):
     def get(self):
     	template_values = {
-    		'date': datetime.datetime.today().strftime("%Y-%m-%d")
+    		'date': datetime.datetime.today().strftime("%Y-%m-%d"),
+            'theContentFront': '{{html theContentFront}}',
+            'theContentBack': '{{html theContentBack}}'
     	}
-        q = db.GqlQuery('SELECT * FROM Entry')
-        template_values['count'] = q.count()
-
-        entries = db.GqlQuery('SELECT * FROM Entry LIMIT 10')
-        template_values['entries'] = entries
-
-        user = users.get_current_user()
-        if user:
-            template_values['user'] = user.nickname()
-            template_values['logout_url'] = users.create_logout_url('/')
-        else:
-            template_values['login_url'] = users.create_login_url()
 
     	template = jinja_environment.get_template("index.html")
     	self.response.out.write(template.render(template_values))
@@ -52,11 +42,12 @@ class AddEntryHandler(webapp2.RequestHandler):
     def post(self):
         target = self.request.get('target')
         amount = int(self.request.get('amount'))
+        location = self.request.get('location')
         date = datetime.datetime.strptime(self.request.get('date'), '%Y-%m-%d').date()
         succeed = True#self.request.get('succeed')
         story = self.request.get('story')
          
-        entry = Entry(target=target, amount=amount, date=date, succeed=succeed, story=story, author=users.get_current_user())
+        entry = Entry(target=target, amount=amount, location=location, date=date, succeed=succeed, story=story, author=users.get_current_user())
         entry.put()
 
         self.redirect('/')
